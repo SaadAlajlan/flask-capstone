@@ -76,7 +76,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible tar curl
+            apk add --update ansible tar curl make
             make install-K8Stools
       - run:
           name: deploy cluster
@@ -94,7 +94,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible tar curl
+            apk add --update ansible tar curl make
             make install-K8Stools
       - run:
           name: deploy hello app
