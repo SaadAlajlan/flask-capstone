@@ -42,9 +42,9 @@ jobs:
           command: |
             source .devops/bin/activate
             make lint 
-        - slack/notify:
-            event: fail
-            template: basic_fail_1 
+      - slack/notify:
+          event: fail
+          template: basic_fail_1 
 
 
   upload-docker:
@@ -82,9 +82,9 @@ jobs:
           name: deploy cluster
           command: |
             make eks-create-cluster
-        - slack/notify:
-            event: fail
-            template: basic_fail_1 
+      - slack/notify:
+          event: fail
+          template: basic_fail_1 
 
   deploy-app:
     docker:
@@ -100,9 +100,9 @@ jobs:
           name: deploy hello app
           command: |      
             make k8s-deployment
-        - slack/notify:
-            event: fail
-            template: basic_fail_1 
+      - slack/notify:
+          event: fail
+          template: basic_fail_1 
 
 workflows:
   default:
