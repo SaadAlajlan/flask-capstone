@@ -68,7 +68,7 @@ jobs:
             template: basic_fail_1 
 
 
-  deploy-infrastructure:
+  deploy-infrastructure and app:
     docker:
       - image: python:3.7.3-stretch
     steps:
@@ -80,27 +80,27 @@ jobs:
       - run:
           name: deploy cluster
           command: |
-            make eks-create-cluster
-      - slack/notify:
-          event: fail
-          template: basic_fail_1 
-
-  deploy-app:
-    docker:
-      - image: python:3.7.3-stretch
-    steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            make install-K8Stools
-      - run:
-          name: deploy hello app
-          command: |      
             make k8s-deployment
       - slack/notify:
           event: fail
           template: basic_fail_1 
+
+  # deploy-app:
+  #   docker:
+  #     - image: python:3.7.3-stretch
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Install dependencies
+  #         command: |
+  #           make install-K8Stools
+  #     - run:
+  #         name: deploy hello app
+  #         command: |      
+  #           make k8s-deployment
+  #     - slack/notify:
+  #         event: fail
+  #         template: basic_fail_1 
 
 workflows:
   default:
@@ -109,6 +109,6 @@ workflows:
       - upload-docker:
           requires: [lint]
       - deploy-infrastructure:
-          requires: [lint]      
-      - deploy-app: 
-          requires: [upload-docker, deploy-infrastructure ] 
+          requires: [lint, upload-docker]      
+      # - deploy-app: 
+      #     requires: [upload-docker, deploy-infrastructure ] 
