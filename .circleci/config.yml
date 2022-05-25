@@ -96,7 +96,7 @@ jobs:
           command: |
             apk add --update ansible tar curl
             make install-K8Stools
-       - run:
+      - run:
           name: deploy hello app
           command: |      
             make k8s-deployment
