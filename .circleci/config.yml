@@ -70,13 +70,12 @@ jobs:
 
   deploy-infrastructure:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: python:3.7.3-stretch
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible tar curl make
             make install-K8Stools
       - run:
           name: deploy cluster
@@ -88,13 +87,12 @@ jobs:
 
   deploy-app:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: python:3.7.3-stretch
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible tar curl make
             make install-K8Stools
       - run:
           name: deploy hello app
