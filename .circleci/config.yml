@@ -78,6 +78,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            kubectl version --client
             make install-K8Stools
       - run:
           name: deploy cluster
