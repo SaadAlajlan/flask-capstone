@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 CLUSTER="hello"
-REGION="us-east-1b"
+REGION="us-west-2"
 CLUSTER_NAME="${CLUSTER}.${REGION}.eksctl.io"
 
 if kubectl config get-clusters | grep -q ${CLUSTER_NAME}; then
