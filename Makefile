@@ -33,8 +33,8 @@ install:	# TODO: Add a Docker analysis (DevSecOps)
 	echo "Installing: hadolint"
 	./bin/install_hadolint.sh
 install-K8Stools:
-	echo "Installing: kubectl"
-	./bin/install_kubectl.sh
+	# echo "Installing: kubectl"
+	# ./bin/install_kubectl.sh
 	echo
 	echo "Installing: eksctl"
 	./bin/install_eksctl.sh
