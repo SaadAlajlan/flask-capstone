@@ -3,7 +3,7 @@ kind: ClusterConfig
 
 metadata:
   name: hello
-  region: us-east-1
+  region: us-west-2
 
 iam:
   withOIDC: true

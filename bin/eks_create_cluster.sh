@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 CLUSTER="hello"
-REGION="us-east-1"
+REGION="us-west-2"
 CLUSTER_NAME="${CLUSTER}.${REGION}.eksctl.io"
 
 if kubectl config get-clusters | grep -q ${CLUSTER_NAME}; then
@@ -11,5 +11,5 @@ if kubectl config get-clusters | grep -q ${CLUSTER_NAME}; then
 else
     echo
     echo "Creating cluster..."
-    ./bin/eksctl create cluster --name hello --region=us-east-1 
+    ./bin/eksctl create cluster --name hello --region=us-west-2 
 fi
