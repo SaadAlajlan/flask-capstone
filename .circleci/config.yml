@@ -1,0 +1,96 @@
+version: 2.1
+
+orbs: 
+  slack: circleci/slack@4.9.3
+  docker: circleci/docker@1.5.0
+
+commands:
+  rollback:
+    description: rollback 
+    steps:
+      - run:
+          name: rollback
+          when: on_fail
+          command: |
+            make rollback
+
+
+jobs:
+  lint:
+    docker:
+      - image: python:3.7.3-stretch
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "hello/requirements.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            # - v1-dependencies-
+      - run:
+          name: Install dependencies
+          command: |
+            python3 -m venv .devops
+            source .devops/bin/activate
+            make install
+      - save_cache:
+          paths:
+            - ./.devops  # TODO: Include in cache the "bin" directory
+          key: v1-dependencies-{{ checksum "hello_app/requirements.txt" }}
+      - run:
+          name: Run lint
+          command: |
+            source .devops/bin/activate
+            make lint 
+
+  upload-docker:
+      docker:
+        - image: cimg/go:1.17
+      steps:
+        - checkout
+        - setup_remote_docker:
+            version: 20.10.11
+
+        - run:
+            name: login to dockerhub
+            command: |
+              docker login -u="$docker_user" -p="$docker_pass"
+        - run:
+            name: Upload Docker to Dockerhub
+            command: |
+              make upload-docker
+        - slack/notify:
+            event: fail
+            template: basic_fail_1 
+
+
+
+  deploy-infrastructure:
+    docker:
+      - image: python:3.7.3-stretch
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible tar curl
+            make install-K8Stools
+      - run:
+          name: deploy cluster
+          command: |
+            make eks-create-cluster
+
+  deploy-app:
+    docker:
+      - image: python:3.7.3-stretch
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible tar curl
+            make install-K8Stools
+       - run:
+          name: deploy hello app
+          command: |      
+            make k8s-deployment     
