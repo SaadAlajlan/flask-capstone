@@ -119,11 +119,14 @@ jobs:
       - image: python:3.7.3-stretch
     steps:
       - checkout
-      - install-kubectl
+      - instal
       - run:
           name: Install dependencies
           command: |
-            # kubectl version --client
+            curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+            sudo install minikube-linux-amd64 /usr/local/bin/minikube
+            minikube start
+            minikube kubectl -- get po -A
             make install-K8Stools
       - run:
           name: deploy cluster
