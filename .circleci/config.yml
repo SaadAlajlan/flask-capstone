@@ -74,11 +74,11 @@ jobs:
       - image: python:3.7.3-stretch
     steps:
       - checkout
-      - kubernetes/install-kubectl
+      - kubernetes/install-kubectl:
+          kubectl: 1.23.6
       - run:
           name: Install dependencies
           command: |
-            pip install awscli
             kubectl version --client
             make install-K8Stools
       - run:
