@@ -11,5 +11,5 @@ if kubectl config get-clusters | grep -q ${CLUSTER_NAME}; then
 else
     echo
     echo "Creating cluster..."
-    ./bin/eksctl create cluster --name hello --region=us-west-2 
+    ./bin/eksctl create cluster --config-file=hello_cluster.yml
 fi

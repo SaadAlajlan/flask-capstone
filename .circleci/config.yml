@@ -14,52 +14,6 @@ commands:
           when: on_fail
           command: |
             make rollback
-  install-kubectl:          
-    description: |
-      Installs kubectl (latest release, by default)
-      Requirements: curl, amd64 architecture
-    parameters:
-      kubectl-version:
-        default: 1.23.4
-        type: string
-      max-time:
-        default: false
-        description: |
-          This parameter will enable the curl command to not timeout for 600 seconds
-        type: boolean
-    steps:
-      - run:
-          command: |
-            #!/bin/bash
-            KUBECTL_VERSION=$(eval echo "$PARAM_KUBECTL_VERSION")
-            MAX_TIME=$(eval echo "$PARAM_MAX_TIME")
-            if [ "$KUBECTL_VERSION" == "latest" ]; then
-                # get latest kubectl release
-                KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
-            fi
-
-            PLATFORM="linux"
-            if [ -n "$(uname | grep "Darwin")" ]; then
-                PLATFORM="darwin"
-            fi
-
-            # download kubectl
-            if [ "$MAX_TIME" == "1" ]; then
-                curl --max-time 300 -LO https://storage.googleapis.com/kubernetes-release/release/$KUBECTL_VERSION/bin/$PLATFORM/amd64/kubectl
-            else 
-                curl -LO https://storage.googleapis.com/kubernetes-release/release/$KUBECTL_VERSION/bin/$PLATFORM/amd64/kubectl
-            fi
-
-            [ -w /usr/local/bin ] && SUDO="" || SUDO=sudo
-
-            $SUDO chmod +x ./kubectl
-
-            $SUDO mv ./kubectl /usr/local/bin
-          environment:
-            PARAM_KUBECTL_VERSION: <<parameters.kubectl-version>>
-            PARAM_MAX_TIME: <<parameters.max-time>>
-          name: Install kubectl
-
 
 jobs:
   lint:
@@ -119,16 +73,11 @@ jobs:
       - image: python:3.7.3-stretch
     steps:
       - checkout
+      - kubernetes/install-kubectl
       - run:
           name: Install dependencies
           command: |
-            curl -LO https://dl.k8s.io/release/v1.23.6/bin/linux/amd64/kubectl
-            curl -LO "https://dl.k8s.io/v1.23.6/bin/linux/amd64/kubectl.sha256"
-            echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
-            install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-            kubectl version --client --output=yaml 
             make install-K8Stools
-
       - run:
           name: deploy cluster
           command: |
