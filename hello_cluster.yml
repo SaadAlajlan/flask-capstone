@@ -1,4 +1,4 @@
-apiVersion: eksctl.io/v1beta1
+apiVersion: apps/v1
 kind: ClusterConfig
 
 metadata:
