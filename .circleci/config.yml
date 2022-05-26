@@ -75,7 +75,7 @@ jobs:
     steps:
       - checkout
       - kubernetes/install-kubectl:
-          kubectl: 1.23.6
+          kubectl:1.23.6
       - run:
           name: Install dependencies
           command: |
