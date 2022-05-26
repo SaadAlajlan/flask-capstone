@@ -20,7 +20,7 @@ commands:
       Requirements: curl, amd64 architecture
     parameters:
       kubectl-version:
-        default: 1.23
+        default: 1.23.4
         type: string
       max-time:
         default: false
