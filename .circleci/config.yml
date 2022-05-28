@@ -73,7 +73,8 @@ jobs:
       - image: python:3.7.3-stretch
     steps:
       - checkout
-      - kubernetes/install-kubectl
+      - run: apt-get install -y sudo
+      - run: ls -al /bin/sh && sudo rm /bin/sh && sudo ln -s /bin/bash /bin/sh && ls -al /bin/sh
       - run:
           name: Install dependencies
           command: |
