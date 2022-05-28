@@ -73,14 +73,10 @@ jobs:
       - image: python:3.7.3-stretch
     steps:
       - checkout
-      - run: apt-get install -y sudo
-      - run: ls -al /bin/sh && sudo rm /bin/sh && sudo ln -s /bin/bash /bin/sh && ls -al /bin/sh
       - run:
           name: Install dependencies
           command: |
             make install-K8Stools
-            apt install kubectl=1.23.6-00
-            pip install awscli --upgrade --user
       - run:
           name: deploy cluster
           command: |
