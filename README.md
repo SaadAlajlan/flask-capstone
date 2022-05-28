@@ -28,3 +28,18 @@ you can:
 
 To verify that the app is working, write your deployment's IP into your browser using port 80, like
 `http://localhost:80` or `http://LOAD_BALANCER_IP:80` 
+
+### lint
+![Screenshot 2022-05-28 191655](https://user-images.githubusercontent.com/38673587/170834595-b5e3fcec-e344-4711-ae88-d6101ccdf39f.jpg)
+* success
+![Screenshot 2022-05-28 191740](https://user-images.githubusercontent.com/38673587/170834598-72e13da9-c76c-42bb-9a6a-2355ad09a457.jpg)
+
+
+
+#### First dyployment.
+![Screenshot 2022-05-28 183705](https://user-images.githubusercontent.com/38673587/170834404-b1ad3df5-1f4c-4e02-b599-fb83bf235bbc.jpg)
+#### second dyployment.
+using 'make rolling-update'
+![Screenshot 2022-05-28 183743](https://user-images.githubusercontent.com/38673587/170834512-c9206fb1-2682-40c7-8649-40e874e2512e.jpg)
+![Screenshot 2022-05-28 183902](https://user-images.githubusercontent.com/38673587/170834572-5bc8428a-ce3c-4c61-9112-75fc01a7a396.jpg)
+
