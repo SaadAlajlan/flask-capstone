@@ -37,6 +37,8 @@ To verify that the app is working, write your deployment's IP into your browser 
 
 
 #### First dyployment.
+http://a92b0843bc5e54a4ba5278c60fb6d668-682203505.us-west-2.elb.amazonaws.com/
+
 ![Screenshot 2022-05-28 183705](https://user-images.githubusercontent.com/38673587/170834404-b1ad3df5-1f4c-4e02-b599-fb83bf235bbc.jpg)
 #### second dyployment.
 using 'make rolling-update'
