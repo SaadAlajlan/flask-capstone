@@ -73,14 +73,17 @@ jobs:
       - image: python:3.7.3-stretch
     steps:
       - checkout
-      - kubernetes/install-kubectl
       - run:
           name: Install dependencies
           command: |
             make install-K8Stools
+            sudo apt install kubectl=1.23.6-00
+            pip install awscli --upgrade --user
       - run:
           name: deploy cluster
           command: |
+            make k8s-deployment
+            aws eks update-kubeconfig --name eksctl-hello-cluste --region us-west-2
             make k8s-deployment
       - slack/notify:
           event: fail
