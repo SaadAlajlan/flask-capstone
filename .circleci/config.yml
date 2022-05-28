@@ -81,8 +81,6 @@ jobs:
           name: deploy cluster
           command: |
             make k8s-deployment
-            aws eks update-kubeconfig --name eksctl-hello-cluste --region us-west-2
-            make k8s-deployment
       - slack/notify:
           event: fail
           template: basic_fail_1 
