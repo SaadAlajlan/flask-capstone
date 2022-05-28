@@ -21,12 +21,11 @@ jobs:
       - image: python:3.7.3-stretch
     steps:
       - checkout
-      # Download and cache dependencies
+
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "hello_app/requirements.txt" }}
-            # fallback to using the latest cache if no exact match is found
-            # - v1-dependencies-
+
       - run:
           name: Install dependencies
           command: |
@@ -35,7 +34,7 @@ jobs:
             make install
       - save_cache:
           paths:
-            - ./.devops  # TODO: Include in cache the "bin" directory
+            - ./.devops  
           key: v1-dependencies-{{ checksum "hello_app/requirements.txt" }}
       - run:
           name: Run lint
@@ -68,23 +67,6 @@ jobs:
             template: basic_fail_1 
 
 
-  deploy-infrastructure and app:
-    docker:
-      - image: python:3.7.3-stretch
-    steps:
-      - checkout
-      - kubernetes/install-kubectl
-      - run:
-          name: Install dependencies
-          command: |
-            make install-K8Stools
-      - run:
-          name: deploy cluster
-          command: |
-            make k8s-deployment
-      - slack/notify:
-          event: fail
-          template: basic_fail_1 
 
   # deploy-app:
   #   docker:
@@ -108,8 +90,6 @@ workflows:
     jobs:
       - lint
       - upload-docker:
-          requires: [lint]
-      - deploy-infrastructure and app:
-          requires: [lint, upload-docker]      
+          requires: [lint]     
       # - deploy-app: 
       #     requires: [upload-docker, deploy-infrastructure ] 
