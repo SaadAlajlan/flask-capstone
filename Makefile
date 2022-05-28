@@ -3,7 +3,7 @@
 
 #Vars
 CLUSTER_NAME=hello
-REGION_NAME=us-east-1
+REGION_NAME=us-west-2
 KEYPAIR_NAME=devops
 DEPLOYMENT_NAME=hello-app
 NEW_IMAGE_NAME=registry.hub.docker.com/saadaj/hello-app:latest
@@ -69,7 +69,7 @@ ci-validate:
 	# Required file: .circleci/config.yml
 	circleci config validate
 
-k8s-deployment: eks-create-cluster
+k8s-deployment: #eks-create-cluster
 	# If using minikube, first run: minikube start
 	./bin/k8s_deployment.sh
 
