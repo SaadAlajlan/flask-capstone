@@ -77,7 +77,7 @@ jobs:
           name: Install dependencies
           command: |
             make install-K8Stools
-            sudo apt install kubectl=1.23.6-00
+            apt install kubectl=1.23.6-00
             pip install awscli --upgrade --user
       - run:
           name: deploy cluster
