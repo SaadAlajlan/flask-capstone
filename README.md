@@ -34,6 +34,8 @@ To verify that the app is working, write your deployment's IP into your browser 
 * success
 ![Screenshot 2022-05-28 191740](https://user-images.githubusercontent.com/38673587/170834598-72e13da9-c76c-42bb-9a6a-2355ad09a457.jpg)
 
+![Screenshot 2022-05-31 005807](https://user-images.githubusercontent.com/38673587/171063020-9417829e-23f9-4c14-924c-b79740e7deb3.jpg)
+
 
 
 #### First dyployment.
